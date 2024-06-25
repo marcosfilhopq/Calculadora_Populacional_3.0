@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Milhão - EDOs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #ffd700;
+            text-align: center;
+        }
+        .question {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .options button:hover {
+            background-color: #45a049;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .prizes {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .prizes ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .prizes li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #3c3c3c;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .prizes li.current {
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+        }
+        #next-question, #stop-game, #restart-game, #back-to-calculator {
+            display:block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #2196F3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #next-question:hover, #stop-game:hover, #restart-game:hover, #back-to-calculator:hover {
+            background-color: #1e88e5;
+        }
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .celebrate {
+            font-size: 40px;
+            color: #ffd700;
+            animation: celebrate 1s infinite;
+            text-align: center;
+        }
+        .button {
+            text-decoration: none;
+            text-align: center;
+            display:block;
+            width: 96,2%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #2196F3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #1e88e5;
+        }
+        
+    </style>
+    <!-- Adicione a biblioteca MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="https://c2risk.com/wp-content/uploads/2023/04/C2-Cyper-Blue-1.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo do Milhão - EDOs</h1>
+        <div id="question" class="question"></div>
+        <div id="options" class="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <div id="prizes" class="prizes"></div>
+        <button id="next-question" style="display: none;" onclick="nextQuestion()">Próxima Pergunta</button>
+        <button id="stop-game" style="display: none;" onclick="stopGame()">Parar e Levar o Prêmio</button>
+        <button id="restart-game" style="display: none;" onclick="restartGame()">Reiniciar Jogo</button>
+        <!-- Botão para voltar à calculadora -->
+        <a href="/"   class="button">Voltar para a Calculadora</a>
+        <!--<button id="back-to-calculator" onclick="goToCalculator()">Voltar para a Calculadora</button>-->
+    </div>
+
+    <script>
+        const levels = [
+            {
+                question: "Resolva a EDO: $$\\frac{dy}{dx} + y^2 = x$$",
+                correctSolution: "$$y(x) = \\sqrt{x} - \\frac{1}{x}$$",
+                options: [
+                    "$$y(x) = \\sqrt{x} - \\frac{1}{x}$$",
+                    "$$y(x) = x^2 + 2x + 1$$",
+                    "$$y(x) = e^x + x$$",
+                    "$$y(x) = \\ln(x) + x$$"
+                ],
+                explanation: `
+                    <p>A equação diferencial dada é:</p>
+                    <p>$$\\frac{dy}{dx} + y^2 = x$$</p>
+                    <p>Para resolver, podemos usar o método de substituição...</p>
+                    <p>A solução correta é: $$y(x) = \\sqrt{x} - \\frac{1}{x}$$</p>
+                `
+            },
+            {
+                question: "Resolva a EDO: $$\\frac{dy}{dx} - y e^x = x$$",
+                correctSolution: "$$y(x) = (x + 1)e^x$$",
+                options: [
+                    "$$y(x) = x^2 e^x$$",
+                    "$$y(x) = (x + 1)e^x$$",
+                    "$$y(x) = x e^{-x}$$",
+                    "$$y(x) = e^{x^2}$$"
+                ],
+                explanation: `
+                    <p>A equação diferencial dada é:</p>
+                    <p>$$\\frac{dy}{dx} - y e^x = x$$</p>
+                    <p>Para resolver, podemos usar o fator integrante...</p>
+                    <p>A solução correta é: $$y(x) = (x + 1)e^x$$</p>
+                `
+            },
+            {
+                question: "Resolva a EDO: $$\\frac{dy}{dx} + \\frac{y}{x} = x^2$$",
+                correctSolution: "$$y(x) = \\frac{x^3}{3} - x$$",
+                options: [
+                    "$$y(x) = x^3 + x$$",
+                    "$$y(x) = \\frac{x^3}{3} - x$$",
+                    "$$y(x) = \\frac{x^2}{2} + x$$",
+                    "$$y(x) = x^2 - \\ln(x)$$"
+                ],
+                explanation: `
+                    <p>A equação diferencial dada é:</p>
+                    <p>$$\\frac{dy}{dx} + \\frac{y}{x} = x^2$$</p>
+                    <p>Para resolver, podemos usar o método de variação de parâmetros...</p>
+                    <p>A solução correta é: $$y(x) = \\frac{x^3}{3} - x$$</p>
+                `
+            },
+            {
+                question: "Resolva a EDO: $$\\frac{dy}{dx} + 3y = \\cos(x)$$",
+                correctSolution: "$$y(x) = \\frac{\\sin(x) + 3\\cos(x)}{10}$$",
+                options: [
+                    "$$y(x) = \\cos(x) + 3\\sin(x)$$",
+                    "$$y(x) = \\frac{\\sin(x) + 3\\cos(x)}{10}$$",
+                    "$$y(x) = e^{3x} + \\cos(x)$$",
+                    "$$y(x) = \\sin(x) - 3\\cos(x)$$"
+                ],
+                explanation: `
+                    <p>A equação diferencial dada é:</p>
+                    <p>$$\\frac{dy}{dx} + 3y = \\cos(x)$$</p>
+                    <p>Para resolver, podemos usar o método dos coeficientes indeterminados...</p>
+                    <p>A solução correta é: $$y(x) = \\frac{\\sin(x) + 3\\cos(x)}{10}$$</p>
+                `
+            },
+            {
+                question: "Resolva a EDO: $$\\frac{dy}{dx} = x y + x^3$$",
+                correctSolution: "$$y(x) = e^{\\frac{x^2}{2}} - x^2 - 1$$",
+                options: [
+                    "$$y(x) = e^{\\frac{x^2}{2}} - x^2 - 1$$",
+                    "$$y(x) = e^{\\frac{x^2}{2}} + x^2 + 1$$",
+                    "$$y(x) = x^2 e^x - 1$$",
+                    "$$y(x) = e^{\\frac{x^3}{3}} - x^2$$"
+                ],
+                explanation: `
+                    <p>A equação diferencial dada é:</p>
+                    <p>$$\\frac{dy}{dx} = x y + x^3$$</p>
+                    <p>Para resolver, podemos usar a substituição de variáveis...</p>
+                    <p>A solução correta é: $$y(x) = e^{\\frac{x^2}{2}} - x^2 - 1$$</p>
+                `
+            },
+            {
+                question: "Resolva a EDO: $$\\frac{dy}{dx} = y^2 - x^2$$",
+                correctSolution: "$$y(x) = \\tan(x) - x^2$$",
+                options: [
+                    "$$y(x) = \\tan(x) - x^2$$",
+                    "$$y(x) = \\cot(x) + x^2$$",
+                    "$$y(x) = e^{-x} - x^2$$",
+                    "$$y(x) = x^2 - \\sin(x)$$"
+                ],
+                explanation: `
+                    <p>A equação diferencial dada é:</p>
+                    <p>$$\\frac{dy}{dx} = y^2 - x^2$$</p>
+                    <p>Para resolver, podemos usar o método de separação de variáveis...</p>
+                    <p>A solução correta é: $$y(x) = \\tan(x) - x^2$$</p>
+                `
+            },
+            {
+                question: "Resolva a EDO: $$\\frac{dy}{dx} = y \\sin(x)$$",
+                correctSolution: "$$y(x) = e^{\\cos(x)}$$",
+                options: [
+                    "$$y(x) = e^{\\cos(x)}$$",
+                    "$$y(x) = e^{\\sin(x)}$$",
+                    "$$y(x) = \\cos(x) + \\sin(x)$$",
+                    "$$y(x) = \\ln|\\sec(x)|$$"
+                ],
+                explanation: `
+                    <p>A equação diferencial dada é:</p>
+                    <p>$$\\frac{dy}{dx} = y \\sin(x)$$</p>
+                    <p>Para resolver, podemos usar o método de separação de variáveis...</p>
+                    <p>A solução correta é: $$y(x) = e^{\\cos(x)}$$</p>
+                `
+            }
+        ];
+
+        const prizes = [
+            "R$ 1.000",
+            "R$ 5.000",
+            "R$ 10.000",
+            "R$ 50.000",
+            "R$ 100.000",
+            "R$ 500.000",
+            "R$ 1.000.000"
+        ];
+
+        let currentLevel = 0;
+
+        function startGame() {
+            currentLevel = 0;
+            showQuestion();
+            showPrizes();
+            document.getElementById('restart-game').style.display = 'none';
+        }
+
+        function showQuestion() {
+            const questionDiv = document.getElementById('question');
+            const optionsDiv = document.getElementById('options');
+            const feedbackDiv = document.getElementById('feedback');
+            const nextQuestionButton = document.getElementById('next-question');
+            const stopGameButton = document.getElementById('stop-game');
+
+            questionDiv.innerHTML = `<p>${levels[currentLevel].question}</p>`;
+            optionsDiv.innerHTML = '';
+            feedbackDiv.innerHTML = '';
+            nextQuestionButton.style.display = 'none';
+            stopGameButton.style.display = 'block';
+
+            levels[currentLevel].options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.innerHTML = option;
+                button.addEventListener('click', () => {
+                    checkSolution(option);
+                });
+                optionsDiv.appendChild(button);
+            });
+            
+            MathJax.typesetPromise();
+        }
+
+        function checkSolution(selectedOption) {
+            const feedbackDiv = document.getElementById('feedback');
+            const nextQuestionButton = document.getElementById('next-question');
+            const stopGameButton = document.getElementById('stop-game');
+            if (selectedOption === levels[currentLevel].correctSolution) {
+                feedbackDiv.innerHTML = `<p>Correto! ${levels[currentLevel].explanation}</p>`;
+                nextQuestionButton.style.display = 'block';
+                stopGameButton.style.display = 'block';
+            } else {
+                if (currentLevel === 0) {
+                    endGame("Errouuuu!! Continue tentando.");
+                } else {
+                    const prize = prizes[currentLevel - 1];
+                    endGame(`Incorreto. Você ganhou ${prize}. ${levels[currentLevel].explanation}`);
+                }
+                stopGameButton.style.display = 'none';
+                nextQuestionButton.style.display = 'none';
+                document.getElementById('restart-game').style.display = 'block';
+            }
+            MathJax.typesetPromise();
+        }
+
+        function nextQuestion() {
+            currentLevel++;
+            if (currentLevel < levels.length) {
+                showQuestion();
+                showPrizes();
+            } else {
+                endGame("Parabéns! Você ganhou R$ 1.000.000!");
+            }
+        }
+
+        function stopGame() {
+            const prize = prizes[currentLevel];
+            endGame(`Você decidiu parar. Você ganhou ${prize}.`);
+        }
+
+        function endGame(message) {
+            const questionDiv = document.getElementById('question');
+            const optionsDiv = document.getElementById('options');
+            const feedbackDiv = document.getElementById('feedback');
+            const stopGameButton = document.getElementById('stop-game');
+            const nextQuestionButton = document.getElementById('next-question');
+
+            questionDiv.innerHTML = `<h2>${message}</h2>`;
+            optionsDiv.innerHTML = '';
+            feedbackDiv.innerHTML = '';
+            stopGameButton.style.display = 'none';
+            nextQuestionButton.style.display = 'none';
+            document.getElementById('restart-game').style.display = 'block';
+
+            if (message.includes("Parabéns")) {
+                const celebration = document.createElement('div');
+                celebration.classList.add('celebrate');
+                celebration.innerText = "🎉 Parabéns! Você venceu! 🎉";
+                questionDiv.appendChild(celebration);
+            }
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        // Função para voltar para a calculadora
+        function goToCalculator() {
+            window.location.href = 'index.html';
+        }
+
+        // Iniciar o jogo
+        startGame();
+    </script>
+    
+</body>
+</html>

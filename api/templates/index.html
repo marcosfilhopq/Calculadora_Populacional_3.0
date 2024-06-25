@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Crescimento Populacional</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="https://c2risk.com/wp-content/uploads/2023/04/C2-Cyper-Blue-1.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+
+    <header>
+        <img src="https://cdn-icons-png.flaticon.com/512/711/711168.png" alt="Calculadora">
+
+        <div>
+        <h1 class="logotxt">Calculadora de Crescimento Populacional</h1>
+        <p class="logotxtunder">Uma ferramenta educacional para calcular e visualizar o crescimento populacional ao longo do tempo usando EDO.</p>
+        </div> 
+
+        <img src="https://cdn-icons-png.flaticon.com/512/10310/10310245.png" alt="Calculadora">
+    </header>
+<main>
+
+    <section id="description">
+        <h2>Sobre o Projeto</h2>
+        <p>Para calcular e visualizar o crescimento populacional ao longo do tempo, esta calculadora web educacional usa Equações Diferenciais Ordinárias (EDO). A população inicial, a taxa de crescimento e o período desejado podem ser inseridos pelos usuários usando Python (Flask), HTML, CSS e JavaScript. 
+O projeto não apenas calcula os resultados, mas também fornece uma descrição detalhada do processo matemático envolvido e inclui um gráfico interativo para facilitar a visualização dos dados.
+        </p>
+    </section>
+
+    <div class="container">
+        <h1>Calculadora de Crescimento Populacional</h1>
+        <form id="calcForm">
+            <label 
+                for="initial_population">População Inicial: <div class="textinfo">( Não coloque vírgula. Exemplo: 2.000.000 = 2000000 )</div>
+                <button type="button" class="info-button" data-tooltip="Informe o número inicial de indivíduos na população.">?</button>
+            </label>
+            <input type="number" id="initial_population" name="initial_population" step="0.01" required>
+            <label 
+                for="growth_rate">Taxa de Variação (%):
+                <button type="button" class="info-button" data-tooltip="Informe a taxa percentual de crescimento, ou decréscimo, da população por período. Aceita valores tanto positivos(+) quanto negativos(-).">?</button>
+            </label>
+            <input type="number" id="growth_rate" name="growth_rate" step="0.01" required>
+            <label 
+                for="time">Tempo Decorrido (Anos):
+                <button type="button" class="info-button" data-tooltip="Informe o período de tempo (em anos) para calcular o crescimento populacional.">?</button>
+            </label>
+            <input type="number" id="time" name="time" step="0.01" required>
+            <select id="time_unit" name="time_unit">
+                <option value="years">Anos</option>
+                <option value="months">Meses</option>
+                <option value="weeks">Semanas</option>
+                <option value="days">Dias</option>
+            </select>            
+            <button type="submit">Calcular</button>
+        </form>
+        <div id="result"></div>
+        <div id="quiz" style="display: none;">
+            <h2>Escolha o valor aproximado do resultado:</h2>
+            <ul id="quiz-options">
+                <!-- As opções serão preenchidas dinamicamente pelo JavaScript -->
+            </ul>
+        </div>
+        <section id="graph">
+            <h2>Gráfico Interativo</h2>
+            <canvas id="growthChart"></canvas>
+        </section>
+        <section id="explanation">
+            <h1>Entendendo a Dinâmica Populacional com EDO</h1>
+            <p>O crescimento populacional é calculado usando a fórmula das Equações Diferenciais Ordinárias (EDO):</p>
+            <p><strong>P(t) = P<sub>0</sub> * e^(rt)</strong></p>
+            <p>Onde:</p>
+            <ul>
+                <li><strong>P(t)</strong> é a população no tempo t</li>
+                <li><strong>P<sub>0</sub></strong> é a população inicial</li>
+                <li><strong>r</strong> é a taxa de crescimento</li>
+                <li><strong>t</strong> é o tempo</li>
+            </ul>
+            <p>Para entender como a população de animais ou pessoas muda ao longo do tempo, usamos uma ferramenta matemática chamada Equação Diferencial Ordinária (EDO). Essa equação fundamental para o crescimento populacional é expressa como:</p>
+
+            <div class="formula">
+                <strong>\[ \frac{dP}{dt} = r \cdot P \]</strong>
+            </div>
+
+            <p>Aqui, \( P \) representa a população em função do tempo \( t \), \( \frac{dP}{dt} \) é a taxa de mudança da população ao longo do tempo e \( r \) é a taxa de crescimento, que determina o ritmo com que a população cresce (positiva para crescimento, negativa para decréscimo).</p>
+
+            <p>Começamos com uma população inicial \( P_0 \) em \( t = 0 \). Para calcular como essa população evolui ao longo dos anos, usamos a solução da EDO:</p>
+
+            <div class="formula">
+                <strong>\[ P(t) = P_0 \cdot e^{rt} \]</strong>
+            </div>
+
+            <p>Aqui, \( e \) é uma constante matemática (aproximadamente 2,71828) e \( r \cdot t \) determina o aumento exponencial da população ao longo do tempo. Isso significa que a população cresce ou diminui de acordo com a taxa \( r \) durante cada unidade de tempo \( t \).</p>
+
+            <div class="example">
+                <p><strong>Exemplo:</strong> Se uma população inicial de 1000 pessoas cresce a uma taxa de 3% ao ano, após 10 anos teremos aproximadamente:</p>
+                <p>\[ P(10) = 1000 \cdot e^{0.03 \cdot 10} \approx 1349 \] pessoas.</p>
+            </div>
+
+            <p>Essa fórmula não apenas nos ajuda a prever o tamanho da população no futuro, mas também a entender como pequenas mudanças na taxa de crescimento podem ter impactos significativos ao longo do tempo.</p>
+
+            <p>Em cenários reais, fatores como recursos limitados, mudanças ambientais ou políticas de controle de natalidade podem afetar a taxa de crescimento \( r \). Incorporar esses fatores na equação nos permite fazer previsões mais precisas e adaptáveis sobre a dinâmica populacional em diferentes contextos.</p>
+        </section>
+    </div>
+    <div class="jogomilhao">
+        <h4>Agora que você entende como EDOs são usadas na aplicação populacional, pratique no Jogo do Milhão! Clique abaixo para encontrar as soluções das Equações Ordinárias e divirta-se!</h4>
+        <button onclick="navigateToJogoMilhaoEdos();" class="game-link">Jogo do Milhão de EDOs</button>
+    </div>
+    
+
+</main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Crescimento Populacional Relativo. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
+
+
+

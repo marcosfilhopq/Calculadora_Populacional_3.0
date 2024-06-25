@@ -1,0 +1,333 @@
+#quiz {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#quiz h2 {
+  margin-top: 0;
+}
+
+#quiz-options {
+  list-style-type: none;
+  padding: 0;
+}
+
+#quiz-options li {
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-top: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#quiz-options li:hover {
+  background-color: #e0e0e0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 15px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#result {
+  display: none;
+  font-weight: bold;
+  margin: 20px 0;
+  font-size: 1.2em;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#explanation {
+  margin-top: 30px;
+  background: #e9ecef;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+pre {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+footer {
+  background-color: #1e90ff;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  bottom: 0;
+}
+
+header {
+  background-color: #1e90ff;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+main {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#graph {
+  margin-top: 20px;
+}
+
+.formula {
+  background-color: #e7f3fe;
+  border-left: 5px solid #1f78d1;
+  padding: 10px;
+  margin: 10px 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.example {
+  background-color: #e7f3fe;
+  border-left: 5px solid #1f78d1;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+img {
+  width: 100px; /* Ajuste conforme necessário */
+  height: auto; /* Mantém a proporção */
+  padding: 10px; /* Espaçamento interno */
+}
+
+.logotxt {
+  font-size: 32px;
+}
+
+.logotxtunder {
+  font-size: 16px;
+}
+
+#description {
+  text-align: justify;
+}
+
+.textinfo {
+  display: inline;
+  font-size: small;
+  color: #217bd4;
+}
+
+.info-button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 5px;
+  display: inline-flex;
+}
+
+.tooltip {
+  display: inline;
+  background: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1em;
+  z-index: 10;
+  margin-top: 5px;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#result {
+  display: none;
+  font-weight: bold;
+  margin: 20px 0;
+  font-size: 1.2em;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 10px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  background: #fff;
+  color: #007bff;
+  font-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  position: relative; /* Necessário para o posicionamento do pseudo-elemento */
+}
+
+select:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+select option {
+  padding: 10px;
+}
+
+a.game-link {
+  display: flex;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #2196F3;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+a.game-link:hover {
+  background-color: #1e88e5;
+}
+
+.jogomilhao {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(https://img.freepik.com/fotos-premium/grupo-de-fundo-de-moedas-de-ouro-3d_653240-122.jpg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.jogomilhao h4 {
+  background-color: rgba(255, 255, 255, 0.7); /* Branco com 70% de transparência */
+  padding: 20px;
+  border-radius: 10px;
+  color: black; /* Cor do texto */
+  text-shadow: -1px -1px 0 #FFF, /* Branco */
+                1px -1px 0 #FFF, /* Branco */
+              -1px  1px 0 #FFF, /* Branco */
+                1px  1px 0 #FFF; /* Branco */
+  margin: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.jogomilhao .game-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #007BFF;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.jogomilhao .game-link:hover {
+  background-color: #0056b3;
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .logotxt {
+    font-size: 24px;
+  }
+
+  .logotxtunder {
+    font-size: 14px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header img {
+    width: 80px;
+  }
+
+  .jogomilhao h4 {
+    font-size: 18px;
+  }
+}
